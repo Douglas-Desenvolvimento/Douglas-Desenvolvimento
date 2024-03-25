@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="//cdn.componentator.com/spa.min@19.css">
+    <script src="//cdn.componentator.com/spa.min@19.js"></script>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .todos.panel {
+            width: 500px;
+            background-color: #ffffff;
+            margin: 0 auto;
+            padding-top: 20px;
+            border-radius: var(--radius);
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.1);
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .flex  header {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .flex button {
+            border: 1px solid #E0E0E0;
+            border-radius: var(--radius); font-size: 11px;
+            font-weight: bold;
+            height: 26px;
+            padding:0 8px;
+            color: #000;
+            min-width: 80px;
+            background-color: #fff;
+            line-height: 24px;
+            text-align: center!important;
+        }
+
+
+        .list { border-radius: var(--radius); border: 1px solid #E0E0E0; }
+        .list .header { font-size: 16px; font-weight: bold; text-align: center; margin-bottom: 20px; }
+        .list figure { display: flex; justify-content: space-between; padding: 8px; font-size: 14px; line-height: 1.2; color: #666; background-color: #F8F8F8; border-radius: var(--radius); margin-bottom: 5px; }
+        .list figure:first-child { margin-top: 10px; }
+        .list figure:last-child { margin-bottom: 0; }
+        .list figure .chekbox { width: 10%; text-align: left; }
+        .list figure .name { width: 30%; text-align: left; }
+        .list figure .description { width: 40%; text-align: left; }
+        .list figure .edit { width: 10%; text-align: right; }
+        .list figure .remove { width: 10%; text-align: right; }
+        .edit { text-align: left!important;}
+    </style>
+</head>
+<body>
+    <ui-component name="exec"></ui-component>
+    <ui-component name="edit"></ui-component>
+
+    @{ body }
+    
+</body>
+</html>

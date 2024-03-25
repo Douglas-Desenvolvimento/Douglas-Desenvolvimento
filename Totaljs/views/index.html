@@ -1,0 +1,93 @@
+<ui-component name="viewbox" config="parent:window;centered:1">
+    <div class="todos panel">
+            <ui-plugin path="todos" class="padding npt">
+                <div>
+                    <div class="flex" style="padding:15px 15px 0">
+                        <div class="header"><i class="ti ti-check-square mr5"></i></div>
+                        <button class="exec" data-exec="?/add"><i class="ti ti-plus mr5"></i>@(Add)</button>
+                    </div>
+                    <ui-bind class="list" path="?.items" config="template">
+                        <script type="text/html" >
+                          <div class="header">
+                                <div>@(Tasks)</div>
+                          </div>
+                          {{ foreach m in value }}
+                            <figure data-id="{{ m.id }}">
+                                <div class="checkbox" data-id="{{ m.id }}">
+                                    <i class="ti ti-check {{ if m.isdone }} orange {{ else }} green {{ fi }} mr5 exec" data-exec="?/check" ></i><span></span>
+                                </div>
+                                <div class="edit2 name " data-edit="required:1;floating:1;exec:?/savename" style="text-decoration: {{ if m.isdone }} line-through {{ else }} none {{ fi }};">{{ m.name }}</div>
+                                <div class="edit2 description" data-edit="floating:1;exec:?/save" style="text-decoration: {{ if m.isdone }} line-through {{ else }} none {{ fi }};">{{ m.description }}</div>
+                                <div class="exec remove" data-exec="?/remove"><i class="ti ti-trash red mr5"></i><span></span></div>
+                            </figure>
+                          {{ end }}
+                        </script>
+                    </ui-bind>
+                </div>
+            </ui-plugin>
+    </div>
+    </ui-component>
+    <ui-component name="floatinginput" path="null" config="placeholder:Type task name ..."></ui-component>
+    
+    <script>
+        var common = {};
+        common.form = '';
+        PLUGIN('todos', function(exports) {
+    
+            var getid = function(element) {
+                return $(element).parent().attrd2('id');
+            };
+    
+            exports.refresh = function() {
+                exports.ajax('GET /todos/list/', '?.items');
+            };
+    
+            exports.add = function(element) {
+                var opt = {};
+                opt.element = element;
+                opt.callback = function(value) {
+                    exports.ajax('POST /todos/create', { name: value, description: 'Description', isdone: false }, function(res, err) {
+                        exports.refresh();
+                    });
+                };
+        
+                SETTER('floatinginput/show', opt);
+            };
+    
+    
+            exports.savename = function(opt) {
+                var id = getid(opt.element);
+                exports.ajax('PUT /todos/update/' + id, { name: opt.value }, function(res, err) {
+                    exports.refresh();
+                });
+            };
+    
+            exports.save = function(opt) {
+                var id = getid(opt.element);
+                var items = GET('todos.items');
+                var item = items.findItem('id', id);
+                console.log(item);
+                exports.ajax('PUT /todos/update/' + id, { name: item.name, description: opt.value }, function(res, err) {
+                    exports.refresh();
+                    
+                });
+            };
+    
+            exports.check = function(element) {
+                var id = getid(element);
+                exports.ajax('GET /todos/toggle/' + id, function(res, err) {
+                    console.log(res);
+                    exports.refresh();
+                });
+            };
+    
+            exports.remove = function(element) {
+                var id = getid(element);
+                exports.ajax('DELETE /todos/remove/' + id, function(res, err) {
+                    exports.refresh();
+                });
+            };
+    
+            exports.refresh();
+        });
+    </script>

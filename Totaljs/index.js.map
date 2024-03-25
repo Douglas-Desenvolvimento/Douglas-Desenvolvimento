@@ -1,0 +1,78 @@
+{
+	"routes": [
+		{
+			"method": "POST",
+			"url": "/todos/create/",
+			"owner": "controller_api",
+			"schema": "Todos",
+			"input": "*name:String,description:String,isdone:String"
+		},
+		{
+			"method": "GET",
+			"url": "/todos/updates/{id}/",
+			"owner": "controller_api",
+			"params": "*id:String",
+			"schema": "Todos"
+		},
+		{
+			"method": "DELETE",
+			"url": "/todos/remove/{id}/",
+			"owner": "controller_api",
+			"params": "*id:String",
+			"schema": "Todos"
+		},
+		{
+			"method": "GET",
+			"url": "/todos/list/",
+			"owner": "controller_api",
+			"schema": "Todos",
+			"query": "search:String"
+		},
+		{
+			"method": "GET",
+			"url": "/todos/read/{id}/",
+			"owner": "controller_api",
+			"params": "*id:String",
+			"schema": "Todos"
+		},
+		{
+			"method": "GET",
+			"url": "/todos/toggle/{id}/",
+			"owner": "controller_api",
+			"params": "*id:String",
+			"schema": "Todos"
+		},
+		{
+			"method": "GET",
+			"url": "/",
+			"owner": "controller_default"
+		}
+	],
+	"actions": [
+		{
+			"name": "Todos --> list",
+			"query": "search:String"
+		},
+		{
+			"name": "Todos --> create",
+			"input": "*name:String,description:String,isdone:String"
+		},
+		{
+			"name": "Todos --> read",
+			"params": "*id:String"
+		},
+		{
+			"name": "Todos --> update",
+			"params": "*id:String",
+			"input": "*name:String,description:String,isdone:String"
+		},
+		{
+			"name": "Todos --> remove",
+			"params": "*id:String"
+		},
+		{
+			"name": "Todos --> done",
+			"params": "*id:String"
+		}
+	]
+}
